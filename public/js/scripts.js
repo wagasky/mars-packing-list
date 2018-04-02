@@ -16,15 +16,16 @@ const appendItems = (data) => {
     return(`
       <article class="item">
         <h3>${name}</h3>
-        <span>
+        <div class="packed-styling">
           <input 
             onclick=togglePacked(event) 
             id="${id}" 
             name="${name}"
             "${checkedVar}"
             type="checkbox"
-            ><h4>Packed</h4>
-        </span>
+            >
+          <h4>Packed</h4>
+        </div>
         <button 
           name=${id}
           onclick=deleteItem(event)>Delete</button>

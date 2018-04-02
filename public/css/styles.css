@@ -1,0 +1,25 @@
+.add-item-container,
+.items-display {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+.items-display {
+  align-items: center;
+}
+
+.item {
+  border: .5px solid grey;
+  margin: 10px 0px;
+  width: 400px;
+}
+
+
+h1 {
+  text-align: center;
+}
+
+button {
+  margin: 5px 0px;
+}
