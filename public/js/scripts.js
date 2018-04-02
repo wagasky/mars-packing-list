@@ -1,4 +1,3 @@
-// onload , render items/get items from the database
 $(window).on('load', () => getItems());
 
 const getItems = async () => {
@@ -12,7 +11,7 @@ const getItems = async () => {
 const appendItems = (data) => {
   const items = data;
   return items.map( item => {
-  let { name, packed } = item;
+  let { name, packed, id } = item;
   const checked = !item.packed ? 'checked' : '' 
   return(`
     <article class="item">
@@ -20,7 +19,9 @@ const appendItems = (data) => {
       <span>
         <input id="checkBox" type="checkbox" ${checked}><h4>Packed</h4>
       </span>
-      <button>Delete</button>
+      <button 
+        name=${id}
+        onclick=deleteItem(event)>Delete</button>
     </article>
 
     `)
@@ -36,7 +37,6 @@ const addItem = (event) => {
   const newItem = { name, packed };
   postData(newItem);
 }
-// return the items in the post response for rendering
 
 const postData = (body) => {
   fetch('/api/v1/items', {
@@ -54,6 +54,9 @@ const getData = async (url) => {
   return json;
 }
 
+const deleteItem = (event) => {
+  console.log('delete selected', event.target.name)
+}
 // on selection of a item delete, delete item from database
 // on selection of an item as packed, update database
 
