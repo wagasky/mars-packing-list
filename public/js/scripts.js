@@ -3,8 +3,28 @@ $(window).on('load', () => getItems());
 
 const getItems = async () => {
   const data = await getData('/api/v1/items')
-  console.log(data)
-  console.log('getItems was called')
+  const itemsToDisplay = appendItems(data)
+
+  $('.items-display').empty();
+  $('.items-display').prepend(`${itemsToDisplay}`)
+}
+
+const appendItems = (data) => {
+  const items = data;
+  return items.map( item => {
+  let { name, packed } = item;
+  const checked = !item.packed ? 'checked' : '' 
+  return(`
+    <article class="item">
+      <h3>${name}</h3>
+      <span>
+        <input id="checkBox" type="checkbox" ${checked}><h4>Packed</h4>
+      </span>
+      <button>Delete</button>
+    </article>
+
+    `)
+  }).join('')
 }
 
 
