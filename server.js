@@ -61,7 +61,28 @@ app.delete('/api/v1/items/:id', (request, response) => {
       response.status(500).json({ error })
     });
 });
+
 // patch or put request
+
+app.patch('/api/v1/items/:id', (request, response) => {
+  const { id } = request.params;
+  const { name, packed } = request.body;
+  database('items')
+    .where('id', id)
+    .update({
+      name,
+      packed
+    })
+    .then(updated => {
+      if (!updated) {
+        return response.status(422).json({ error: 'unable to update item' });
+      }
+      response.status(200).json('Database successfully updated');
+    })
+    .catch(error => {
+      response.status(500).json({ error });
+    });
+});
 
 app.listen(app.get('port'), () => {
   console.log(`${app.locals.title} is running on ${app.get('port')}`)
