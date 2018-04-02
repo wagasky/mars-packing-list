@@ -33,15 +33,15 @@ const appendItems = (data) => {
 }
 
 
-const addItem = (event) => {
+const addItem = async (event) => {
   event.preventDefault();
 
   const name = $('.saveItemForm .nameInput').val();
   const packed = false;
   const newItem = { name, packed };
 
-  postData(newItem);
-  getItems();
+  await postData(newItem);
+  await getItems();
 }
 
 const postData = (body) => {
@@ -70,8 +70,24 @@ const deleteItem = async (event) => {
 }
 // on selection of an item as packed, update database
 
-const togglePacked = (event) => {
+const togglePacked = async (event) => {
   const { id, name } = event.target;
   const packed = event.target.checked;
+  const updatedItem = { name, packed };
+
+  console.log(updatedItem)
+  // debugger
+  await patchData(id, updatedItem);
+  await getItems();
+}
+
+const patchData = async (id, body) => {
+  await fetch(`/api/v1/items/${id}`, {
+    method: 'PATCH',
+    body: JSON.stringify(body),
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
 }
 
