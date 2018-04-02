@@ -2,10 +2,11 @@
 $(window).on('load', () => getItems());
 
 const getItems = () => {
+  const data = getData('/api/v1/items')
+  console.log(data)
   console.log('getItems was called')
 }
 
-// on submit, post item to the database
 
 const addItem = (event) => {
   event.preventDefault();
@@ -25,6 +26,12 @@ const postData = (body) => {
       'Content-Type': 'application/json'
     })
   })
+}
+
+const getData = async (url) => {
+  const response = await fetch(url);
+  const json = await response.json();
+  return json;
 }
 
 // on selection of a item delete, delete item from database

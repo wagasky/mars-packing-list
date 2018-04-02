@@ -12,10 +12,17 @@ app.set('port', process.env.PORT || 3001);
 app.locals.title = "Mars Packing List";
 
 app.get('/api/v1/items', (request, response) => {
-  
+  console.log('get was called')
+  database('items')
+    .select()
+    .then(items => {
+      response.status(200).json(items);
+    })
+    .catch(error => {
+      reponse.status(500).json({ error });
+    })
 });
 
-// get
 
 app.post('/api/v1/items', (request, response) => {
   const item  = request.body 
