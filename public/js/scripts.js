@@ -17,7 +17,14 @@ const addItem = (event) => {
 }
 // return the items in the post response for rendering
 
-const postData = () => {
+const postData = (body) => {
+  fetch('/api/v1/items', {
+    method: 'POST',
+    body: JSON.stringify(body), 
+    headers: new Headers({
+      'Content-Type': 'application/json'
+    })
+  })
   console.log('postData was called')
 }
 
