@@ -1,8 +1,8 @@
 // onload , render items/get items from the database
 $(window).on('load', () => getItems());
 
-const getItems = () => {
-  const data = getData('/api/v1/items')
+const getItems = async () => {
+  const data = await getData('/api/v1/items')
   console.log(data)
   console.log('getItems was called')
 }
