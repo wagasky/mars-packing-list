@@ -19,11 +19,11 @@ app.get('/api/v1/items', (request, response) => {
 
 app.post('/api/v1/items', (request, response) => {
   const item  = request.body 
-  
   const { name, packed } = item
   const newItem = { name, packed }
+  console.log(newItem)
   for(let requiredParameter of ['name', 'packed']) {
-    if(!item[requiredParameter]) {
+    if(!newItem[requiredParameter]) {
       return response
         .status(422)
         .send({ error: `You're missing a "${requiredParameter}"`})
@@ -36,7 +36,6 @@ app.post('/api/v1/items', (request, response) => {
     .catch(error => {
       response.status(500).json({ error });
     });
-  console.log('something')
 });
 // post
 // delete
