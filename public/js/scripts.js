@@ -54,8 +54,12 @@ const getData = async (url) => {
   return json;
 }
 
-const deleteItem = (event) => {
+const deleteItem = async (event) => {
   console.log('delete selected', event.target.name)
+  const itemId = event.target.name
+  await fetch(`/api/v1/items/${itemId}`, {
+    method: 'DELETE'
+  })
 }
 // on selection of a item delete, delete item from database
 // on selection of an item as packed, update database
