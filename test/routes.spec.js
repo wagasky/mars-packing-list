@@ -116,5 +116,50 @@ describe('API ROUTES', () => {
   });
 
 
+describe('DELETE /api/v1/items/:id', () => {
+    it('should delete an item', () => {
+      return chai
+        .request(server)
+        .delete('/api/v1/items/1')
+        .then(response => {
+          expect(response).to.have.status(204);
+        });
+    });
+
+    it('should return 404 if delete item is incorrect', () => {
+      return chai
+        .request(server)
+        .delete('/api/v1/items/99999999999')
+        .then(response => {
+          expect(response).to.have.status(500);
+        });
+    });
+  });
+
+describe('PATCH /api/v1/items/:id', () => {
+    it('should update the expected item', () => {
+      return chai
+        .request(server)
+        .patch('/api/v1/items/1')
+        .send({ name: 'Brand New Spaceship'})
+        .then(response => {
+          response.should.have.status(200);
+          expect(response.body).to.equal('Database successfully updated');
+        });
+    });
+
+    it('should return 422 if no record was updated', () => {
+      return chai
+        .request(server)
+        .patch('/api/v1/items/1000000000000')
+        .send({ 
+          name: 'Brand New Spaceship',
+          packed: true
+        })
+        .then(response => {
+          response.should.have.status(500);
+        });
+    });
+  });
 
 });
