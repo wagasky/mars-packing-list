@@ -2,7 +2,7 @@ $(window).on('load', () => getItems());
 
 const getItems = async () => {
   const data = await getData('/api/v1/items')
-  const itemsToDisplay = appendItems(data)
+  const itemsToDisplay = await appendItems(data)
 
   $('.items-display').empty();
   $('.items-display').prepend(`${itemsToDisplay}`)
@@ -11,25 +11,27 @@ const getItems = async () => {
 const appendItems = (data) => {
   const items = data;
   return items.map( item => {
-  let { name, packed, id } = item;
-  const checked = !item.packed ? 'checked' : '' 
-  return(`
-    <article class="item">
-      <h3>${name}</h3>
-      <span>
-        <input 
-          onclick=togglePacked(event) 
-          id="${id}" 
-          name="${name}"
-          type="checkbox"${checked}><h4>Packed</h4>
-      </span>
-      <button 
-        name=${id}
-        onclick=deleteItem(event)>Delete</button>
-    </article>
+    const { name, id } = item;
+    const checkedVar = item.packed === true ? 'checked' : '' 
+    return(`
+      <article class="item">
+        <h3>${name}</h3>
+        <span>
+          <input 
+            onclick=togglePacked(event) 
+            id="${id}" 
+            name="${name}"
+            "${checkedVar}"
+            type="checkbox"
+            ><h4>Packed</h4>
+        </span>
+        <button 
+          name=${id}
+          onclick=deleteItem(event)>Delete</button>
+      </article>
 
-    `)
-  }).join('')
+      `)
+    }).join('')
 }
 
 
@@ -72,13 +74,13 @@ const deleteItem = async (event) => {
 
 const togglePacked = async (event) => {
   const { id, name } = event.target;
+  console.log(event.target.checked)
   const packed = event.target.checked;
   const updatedItem = { name, packed };
 
   console.log(updatedItem)
   // debugger
   await patchData(id, updatedItem);
-  await getItems();
 }
 
 const patchData = async (id, body) => {
