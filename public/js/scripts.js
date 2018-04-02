@@ -36,6 +36,7 @@ const addItem = (event) => {
   const packed = false;
   const newItem = { name, packed };
   postData(newItem);
+  getItems()
 }
 
 const postData = (body) => {
