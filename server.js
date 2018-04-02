@@ -8,33 +8,42 @@ const database = require('knex')(configuration);
 
 app.use(express.static('public'))
 app.use(bodyParser.json());
-app.set('port', process.env.PORT || 3000);
+app.set('port', process.env.PORT || 3001);
 app.locals.title = "Mars Packing List";
 
 app.get('/api/v1/items', (request, response) => {
-  
+  console.log('get was called')
+  database('items')
+    .select()
+    .then(items => {
+      response.status(200).json(items);
+    })
+    .catch(error => {
+      reponse.status(500).json({ error });
+    })
 });
 
-// get
 
 app.post('/api/v1/items', (request, response) => {
-  // const item = request.body;
-  // for(let requiredParameter of ['name']) {
-  //   if(!projects[requiredParameter]) {
-  //     return response
-  //       .status(422)
-  //       .send({ error: `You're missing a "${requiredParameter}"`})
-  //   }
-  // }
-  //   database('mars_packing_list').insert(item, 'id')
-  //   .then(item => {
-  //     response.status(201).json({ id: item[0] })
-  //   })
-  //   .catch(error => {
-  //     response.status(500).json({ error });
-  //   });
-  console.log('post was called')
-  });
+  const item  = request.body 
+  const { name, packed } = item
+  const newItem = { name, packed }
+  console.log(newItem)
+  for(let requiredParameter of ['name']) {
+    if(!newItem[requiredParameter]) {
+      return response
+        .status(422)
+        .send({ error: `You're missing a "${requiredParameter}"`})
+    }
+  }
+    database('items').insert(newItem, 'id')
+    .then(item => {
+      response.status(201).json({ id: item[0] })
+    })
+    .catch(error => {
+      response.status(500).json({ error });
+    });
+});
 // post
 // delete
 // patch or put request
