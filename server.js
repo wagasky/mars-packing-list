@@ -22,14 +22,14 @@ app.post('/api/v1/items', (request, response) => {
   const { name, packed } = item
   const newItem = { name, packed }
   console.log(newItem)
-  for(let requiredParameter of ['name', 'packed']) {
+  for(let requiredParameter of ['name']) {
     if(!newItem[requiredParameter]) {
       return response
         .status(422)
         .send({ error: `You're missing a "${requiredParameter}"`})
     }
   }
-    database('mars_packing_list').insert(newItem, 'id')
+    database('items').insert(newItem, 'id')
     .then(item => {
       response.status(201).json({ id: item[0] })
     })
