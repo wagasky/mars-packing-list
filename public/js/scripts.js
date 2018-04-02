@@ -11,9 +11,9 @@ const addItem = (event) => {
   event.preventDefault();
 
   const name = $('.saveItemForm .nameInput').val();
-
-  postData()
-  console.log(name)
+  const packed = false;
+  const newItem = { name, packed };
+  postData(newItem);
 }
 // return the items in the post response for rendering
 
@@ -25,7 +25,6 @@ const postData = (body) => {
       'Content-Type': 'application/json'
     })
   })
-  console.log('postData was called')
 }
 
 // on selection of a item delete, delete item from database
