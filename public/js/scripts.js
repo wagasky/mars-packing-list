@@ -60,6 +60,8 @@ const deleteItem = async (event) => {
   await fetch(`/api/v1/items/${itemId}`, {
     method: 'DELETE'
   })
+
+  getItems()
 }
 // on selection of a item delete, delete item from database
 // on selection of an item as packed, update database
