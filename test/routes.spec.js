@@ -74,4 +74,47 @@ describe('API ROUTES', () => {
         });
     });
   });
+
+
+  describe('POST /api/v1/groups', () => {
+    it('should post a new item that has complete params', () => {
+      return chai
+        .request(server)
+        .post('/api/v1/items')
+        .send({
+          name: 'Spaceship',
+          packed: false,
+        })
+        .then(response => {
+          response.should.have.status(201);
+          response.body.should.be.a('object');
+          response.body.should.have.property('id');
+          response.body.id.should.equal(2);
+        })
+        .catch(err => {
+          throw err;
+        });
+    });
+
+    it('should not create a new item if called with incorrect params', () => {
+      return chai
+        .request(server)
+        .post('/api/v1/items')
+        .send({
+          packed: false,
+        })
+        .then(response => {
+          response.should.have.status(422);
+          response.should.be.json;
+          response.body.should.be.a('object');
+          response.body.error.should.equal(`You're missing a "name"`);
+        })
+        .catch(err => {
+          throw err;
+        });
+    });
+  });
+
+
+
 });
