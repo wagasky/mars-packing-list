@@ -44,8 +44,23 @@ app.post('/api/v1/items', (request, response) => {
       response.status(500).json({ error });
     });
 });
-// post
+
 // delete
+
+app.delete('/api/v1/items/:id', (request, response) => {
+  const { id } = request.params
+  
+  database('items').where("id", id).del()
+    .then( deleted => {
+      if (!deleted) {
+        return response.status(404).json({error: 'no item to delete'})
+      }
+      response.status(204).json(deleted)
+    })
+    .catch( error => { 
+      response.status(500).json({ error })
+    });
+});
 // patch or put request
 
 app.listen(app.get('port'), () => {
