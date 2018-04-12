@@ -58,7 +58,7 @@ app.delete('/api/v1/items/:id', (request, response) => {
       response.status(204).json(deleted)
     })
     .catch( error => { 
-      response.status(500).json({ error })
+      response.status(404).json({ error })
     });
 });
 
@@ -80,7 +80,7 @@ app.patch('/api/v1/items/:id', (request, response) => {
       response.status(200).json('Database successfully updated');
     })
     .catch(error => {
-      response.status(500).json({ error });
+      response.status(404).json({ error });
     });
 });
 
