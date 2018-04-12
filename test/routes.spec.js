@@ -76,7 +76,7 @@ describe('API ROUTES', () => {
   });
 
 
-  describe('POST /api/v1/groups', () => {
+  describe('POST /api/v1/items', () => {
     it('should post a new item that has complete params', () => {
       return chai
         .request(server)
