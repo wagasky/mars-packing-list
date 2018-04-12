@@ -12,7 +12,7 @@ const appendItems = (data) => {
   const items = data;
   return items.map( item => {
     const { name, id } = item;
-    const checkedVar = item.packed === true ? 'checked' : '' 
+    const checkedVar = item.packed === 'true' ? 'checked' : '';
     return(`
       <article class="item">
         <h3>${name}</h3>
@@ -21,7 +21,7 @@ const appendItems = (data) => {
             onclick=togglePacked(event) 
             id="${id}" 
             name="${name}"
-            "${checkedVar}"
+            ${checkedVar}
             type="checkbox"
             >
           <h4>Packed</h4>

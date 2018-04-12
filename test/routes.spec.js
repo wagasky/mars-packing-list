@@ -76,7 +76,7 @@ describe('API ROUTES', () => {
   });
 
 
-  describe('POST /api/v1/groups', () => {
+  describe('POST /api/v1/items', () => {
     it('should post a new item that has complete params', () => {
       return chai
         .request(server)
@@ -131,7 +131,7 @@ describe('DELETE /api/v1/items/:id', () => {
         .request(server)
         .delete('/api/v1/items/99999999999')
         .then(response => {
-          expect(response).to.have.status(500);
+          expect(response).to.have.status(404);
         });
     });
   });
@@ -157,7 +157,7 @@ describe('PATCH /api/v1/items/:id', () => {
           packed: true
         })
         .then(response => {
-          response.should.have.status(500);
+          response.should.have.status(404);
         });
     });
   });
